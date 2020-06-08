@@ -193,8 +193,19 @@ email[email %>% str_split("@", simplify = T) %>%
   .$user_name %>% 
   str_detect("[:punct:]")]
 
+# str_glue function, {} calculates the data
 
+str_glue("this {mean(cars$speed)} ", .sep = ":", " is the mpg mean")
 
+lll <- mtcars %>% rownames_to_column("car_brand") 
+str_glue_data(lll, "The car model {lll$car_brand} has {lll$hp} hp")
+
+# I could also change rowname to a column and pipe everything into one pipe
+mtcars %>% rownames_to_column("car_brand") %>% 
+  str_glue_data("The car model {car_brand} has {hp} hp")
+
+# or, I can use rowname function direction
+mtcars %>% str_glue_data("{rownames(.)} has {hp} hp")
 
 
 
