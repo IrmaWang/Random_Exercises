@@ -54,7 +54,7 @@ mydata <- mutate(
   )
 )
 
-# practice using rowwise function before mutate
+# practice using rowwise function before mutate-------------------------
 
 iris %>% rowwise() %>%
   janitor::clean_names() %>% 
@@ -111,5 +111,49 @@ iris %>%
   mutate(pl_qul = map(pl_qul, enframe, name = "quantile")) %>% 
   unnest(cols = c(pl_qul))
 
+# stringr practice----------------------------------------------------
+strings <- c(
+  "310 733 8965",
+  "310-293-8753",
+  "Work: 310-499-7527; Home: 310.355.3678/310-880-4789",
+  "3109185662"
+)
+ 
+phone <- "([2-9][0-9]{2})[. -]*([0-9]{3})[. -]*([0-9]{4})"
+
+# find the pattern in strings
+str_locate(strings, phone)
+str_locate_all(strings, phone)
+
+# extract pattern from strings
+str_extract(strings, phone)
+str_extract_all(strings, phone)
+str_extract_all(strings, phone, simplify = TRUE)
+
+# match pattern from strings separtes pattern
+str_match(strings, phone)
+
+# replace strings with other characters
+str_replace(strings, phone, "xxx-xxx-xxxx")
+str_replace_all(strings, phone, "xxx-xxx-xxxx")
+
+# replace strings with other number
+str_replace(strings, "([2-9][0-9]{2})[. -]*([0-9]{3})","444-555")
+
+# practice with emails
+
+email <- c(
+  "aaron@ucla.edu",
+  "pwang@ucla.edu",
+  "aha@gmail.com",
+  "lin11@hotmail.com",
+  "Aaron@ucla.edu",
+  "kk_tt@yahoo.com"
+)
+
+pattern <- "@"
+
+# I want to separate emails by name and domain
+str_split(email, pattern, simplify = TRUE)
 
 ######################################################################
