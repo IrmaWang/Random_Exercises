@@ -156,4 +156,46 @@ pattern <- "@"
 # I want to separate emails by name and domain
 str_split(email, pattern, simplify = TRUE)
 
+# I want to look for things in those email string
+# such as "aaron"
+
+str_detect(email, "aaron")
+email[str_detect(str_to_lower(email),"aaron")]
+
+# use pipe to find
+email %>% str_to_lower() %>% 
+  str_view("aaron") 
+
+# look for numbers in string
+
+str_detect(email,"[:digit:]{2}")
+email[str_detect(email,"[:digit:]{2}")]
+
+email %>% str_view("[:digit:]{2}") 
+
+# look for special character in string
+email[email %>% str_split("@", simplify = T) %>%
+          `colnames<-`(c("user_name", "domain")) %>% 
+          as_tibble() %>% 
+          pull(user_name) %>% 
+          str_detect("[:punct:]")] 
+
+email[email %>% str_split("@", simplify = T) %>%
+        `colnames<-`(c("user_name", "domain")) %>% 
+        as.data.frame() %>% 
+        pull(user_name) %>% 
+        str_detect("[:punct:]")] 
+# pull function takes out vectotized column from a df or table
+
+email[email %>% str_split("@", simplify = T) %>% 
+  `colnames<-`  (c("user_name","domain")) %>% 
+  as.data.frame() %>% 
+  .$user_name %>% 
+  str_detect("[:punct:]")]
+
+
+
+
+
+
 ######################################################################
